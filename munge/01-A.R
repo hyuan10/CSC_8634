@@ -2,6 +2,11 @@
 
 library(dplyr)
 library(readr)
+library(data.table)
+
+# Set up working directory to data  folder to create data frames from data
+
+setwd("~/Documents/CSC_8634/data")
 
 # Setting up the data files as data frames
 
@@ -29,3 +34,10 @@ colnames(df.database.binded) <- c("Timestamp","packet length (1)", "anonymized(2
 
 date.time = data.frame("Datetime Timestamp" = c(as.POSIXct(df.database.binded$Timestamp, origin="1970-01-01", tz="GMT")))
 
+# Combines the Date Time df with row binded df
+
+df.database<-cbind(date.time, df.database.binded)
+
+# Set working directory back to project folder
+
+setwd("~/Documents/CSC_8634/")
