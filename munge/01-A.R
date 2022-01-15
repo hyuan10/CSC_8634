@@ -44,6 +44,8 @@ date.time$Hour <- format(as.POSIXct(date.time$Date.time), format = "%H")
 
 date.time$Mins <- format(as.POSIXct(date.time$Date.time), format = "%M")
 
+date.time$Secs <- format(as.POSIXct(date.time$Date.time), format = "%S")
+
 # Combines the Date Time df with row binded df
 
 df.database<-cbind(date.time, df.database.binded)
