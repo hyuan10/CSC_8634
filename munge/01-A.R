@@ -32,7 +32,17 @@ colnames(df.database.binded) <- c("Timestamp","packet length (1)", "anonymized(2
 
 # Reformats Timestamp to Human readable
 
-date.time = data.frame("Datetime Timestamp" = c(as.POSIXct(df.database.binded$Timestamp, origin="1970-01-01", tz="GMT")))
+date.time = data.frame("Date.time" = c(as.POSIXct(df.database.binded$Timestamp, origin="1970-01-01", tz="GMT")))
+
+date.time$Date <- as.Date(date.time$Date.time)
+
+date.time$Time <- format(as.POSIXct(date.time$Date.time), format = "%H:%M")
+
+date.time$Day <- format(as.POSIXct(date.time$Date.time), format = "%d")
+
+date.time$Hour <- format(as.POSIXct(date.time$Date.time), format = "%H")
+
+date.time$Mins <- format(as.POSIXct(date.time$Date.time), format = "%M")
 
 # Combines the Date Time df with row binded df
 
@@ -41,3 +51,5 @@ df.database<-cbind(date.time, df.database.binded)
 # Set working directory back to project folder
 
 setwd("~/Documents/CSC_8634/")
+
+
