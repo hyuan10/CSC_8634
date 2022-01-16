@@ -22,3 +22,9 @@ detach(df.jan01)
 attach(df.jan02)
 df.Sorted2<-df.jan02[order(Hour,Mins,Secs),]
 detach(df.jan02)
+
+# Creates data frames for the grouped and summed data
+
+df.gjan01 <- df.Sorted1 %>% group_by(Time) %>% summarise(sum_packet = sum(`packet length (1)`))
+
+df.gjan02 <- df.Sorted2 %>% group_by(Time) %>% summarise(sum_packet = sum(`packet length (1)`))
