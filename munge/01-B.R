@@ -27,11 +27,19 @@ detach(df.oct02)
 
 df.goct01 <- df.Sorted1 %>% 
   group_by(Time) %>% 
-  summarise(sum_packet = sum(`packet length (1)`))
+  summarise('Sum Packet Length' = sum(`packet length (1)`))
 
 df.goct02 <- df.Sorted2 %>% 
   group_by(Time) %>% 
-  summarise(sum_packet = sum(`packet length (1)`))
+  summarise('Sum Packet Length' = sum(`packet length (1)`))
 
- 
-df.goct02$Date <- "Oct 02"
+# Adding in a date column back into the dataframe
+
+df.goct01 <- df.goct01 %>% add_column(Date= "01 Oct",.before="Time")
+
+df.goct02 <- df.goct02 %>% add_column(Date= "02 Oct",.before="Time")
+
+# Combining the dataframes to be plot into one
+
+df.gb.database<- rbind(df.goct01, df.goct02)
+
