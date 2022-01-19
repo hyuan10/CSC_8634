@@ -40,7 +40,7 @@ date.time$Time <- format(as.POSIXct(date.time$Date.time), format = "%H:%M")
 
 date.time$Day <- format(as.POSIXct(date.time$Date.time), format = "%d")
 
-date.time$Hour <- format(as.POSIXct(date.time$Date.time), format = "%H")
+date.time$Hour <- format(as.POSIXct(date.time$Date.time), format = "%H:00")
 
 date.time$Mins <- format(as.POSIXct(date.time$Date.time), format = "%M")
 
