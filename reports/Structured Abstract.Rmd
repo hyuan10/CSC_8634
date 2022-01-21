@@ -1,0 +1,29 @@
+---
+title: "Structured Abstract"
+author: "Harvey Yuan 0077439"
+date: "18/01/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir= normalizePath('..'))
+```
+
+## Context
+
+As Facebook and many other organisation are building newer and bigger data centers, it is important to understand the traffic loads the data centers will come under during peak and offpeak times to be able to plan and future proof these structures to ensure reliability.
+
+## Objective
+
+The aim of this investigation is to evaluate the correlation between the packets received by a database and the time of day they are received. By realising when the peak packets are received, engineers are able to understand the changes in loads received hourly. This will help with ensuring the data centre can continue to sustain these loads and indicate when the data centre requires to be scaled up to accomodate for more users. 
+
+## Method
+
+By using the data from a Cluster A Facebook data, the traffic load of the Facebook Atloona Data Center was analysed by summing the total packet length. Whilst the total packet length is an arbitary number, it shows the trend of traffic across the period of a day. The individual packets recieved over the course of the day was also analysed by summing the number of individual packets across the 24 Hour period and plotting them for the Hour. This shows peak and offpeak times of the traffic on the database clearly.
+
+## Results
+
+The results from the analysis clearly show that there are two main periods where activity was increased. The peaks in traffice were between 11AM - 1PM and 4PM - 5PM where the traffice increased, on average, by 19% and 23% respectively. 
+
+![Total individual packets over 24 Hr.](~/Documents/CSC_8634/graphs/p2.png)
