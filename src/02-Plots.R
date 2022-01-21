@@ -1,4 +1,4 @@
-#Plotting the packets received length sum against the time
+#Plotting the packets exchanged length sum against the time
 
 library(scales)
 
@@ -15,7 +15,7 @@ p1
 
 
 p2 <- ggplot(data=df.cb.database, aes(x=CombinedDateHour, y=Individual_Packets)) +
-  ggtitle("Individual Packets Received Over Time")+
+  ggtitle("Individual Packets Exchanged Over Time")+
   labs(x="Time", y= "Individual Packets",caption="Graph 2")+
   geom_bar(stat="identity", fill="#08588D")+
   scale_x_datetime(labels = date_format("%H:%M", tz="GMT"))+
