@@ -1,0 +1,237 @@
+---
+title: "CSC_8634"
+author: "Harvey Yuan 0077439"
+date: "10/01/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir= normalizePath('..'))
+```
+
+```{r ProjectTemplate, include=FALSE}
+library(ProjectTemplate)
+load.project()
+```
+
+## Aim and Objective
+
+The aim of this analysis is to explore and see if there is any correlation between the number of packets exchanged by the database and the when they were exchanged during the day. By reviewing when the most frequent number of packets are received by the database, we are able to understand the load on them over an average day. By doing so, it will enable the data centre to sustain the continued loads. This will also allow for engineers realise faults should any arrive due to an increased reception of packets. This will also help the engineers decide when the capacity of the data centre needs to be increased due to an increased in the average load.
+
+## Technologies and Libraries Used
+
+Throughout this project, there were a number of different libraries which were used with the main library being "ProjectTemplate".
+
+***R version 4.1.2***
+
+R is a language used for statistical computing and graphics.
+
+***RStudio 2021.09.01 Build 372***
+
+RStudio is an IDE that is used for R. RStudio includes an in-built console and terminal that allows for direct code executing and also a pane which allows for files, plots and packages management. Different libraries can be installed through this pane.
+
+***ProjectTemplate version 0.10.2***
+
+ProjectTemplate (PT) is a system that allows the user to automate medial parts of a data analysis project such as the organisation of the project files and processing data (Darke, n.d.).
+
+This project utilises PT heavily to organise and mange the project files throughout this analysis. The "data" folder stores the raw data that will be analysed as part of this project.
+
+PT also stores pre-process scripts, which will run as soon as the project has been loaded by PT which is stored in the "munge" folder. Similar to the munge folder, the "src" folder stores scripts that can be manually run.
+
+***dplyr version 1.0.7***
+
+The dplyr library allows for the user to use a set of verbs to write code for common data manipulation steps. It allows the user to use familiar words when scripting analysis and pre-processing scripts (such as filter), both for easy understanding of the code and proof reading (Hadley Wickham, n.d.).
+
+
+***ggplot2 version 3.3.5***
+
+ggplot is a system for creating graphics (where the data is a selected data frame). The data is either provided by the user or created in script, which allows for said user to iteratively add new layers, components and functionality. ggplot will be used to demonstrate the analysis as part of this investigation.
+
+***data.table version 1.14.2***
+
+data.table is an extension of the data.frame package in R. It allows for quick manipulation of data, especially where adding/updating columns of large datasets, which was a main factor in this project.
+
+***Scales version 1.1.1***
+
+The scales package allows for ggplot to create axis label which override the default breaks which allows them to be easily read.
+
+
+## Data Understanding and Preparation
+
+As part of this project, there were a number of different data sets from 3 of Facebook's production cluster (Database, Web and Hadoop Servers). Each cluster contains a compressed dataset in tsv format which includes the following variables:
+
+* timestamp
+* packet length (1)
+* anonymized(2) source (src) IP
+* anonymized(2) destination (dst) IP
+* anonymized source (src) L4 Port
+* anonymized destination (dst) L4 Port
+* IP protocol
+* anonymized source (src) hostprefix (3)
+* anonymized destination (dst) hostprefix (3)
+* anonymized source (src) Rack
+* anonymized destination (dst) Rack
+* anonymized source (src) Pod
+* anonymized destination (dst) Pod
+* intercluster
+* interdatacenter
+
+However, as the aim and objective of this analysis is to investigate if there is any correlation between the number of packets exchanged by the database and when they are exchanged, not all of the data provided will be useful towards this analysis. Within the provided clusters, each file contained a vast number of datasets. As "packet sampling does not disturb the anomaly size when measured in volume metric" (Daniela Brauckhoff, 2006), it was decided that a small sample of the ~270 data subsets would be used. From the list, the first, last and two random subsets were chosen to be a part of this investigation. 
+
+As the datasets were large in size, they were compressed and as such, required decompression in order to be loaded onto the platform. 
+
+Upon inspection of all of the variables of the raw dataset, only the "timestamp" column and the "packet length (1)" column will be used as these were the only columns which had the required information for this particular study. The timestamp within the subset is in the Unix Epoch format, so in order to wrangle this data, it was important to convert this into a human readable format. This will also help with the plots. Once the data was transformed into a human readable format, it was found that the data was from 1st of October 2016 07:00 AM to 2nd of October 2016 07:00. This meant that, for the purpose of this investigation, the time period perfectly aligned to what was being investigated.
+
+All four subset of data were combined into one main data subset to ensure the remaining wrangling required only one set of code.  The Epoch time was converted to the human readable format of yyyy-mm-dd HH:MM and from here, got their own columns to aide in further easier data wrangling. 
+
+Since the data only spanned across two days, the data was filtered to for the 1st and 2nd to have their own sets (in retrospect, this was not required as the remaining data wrangling did not require the dates to be separate). Each filtered dataset was then sorted by Hour, Mins and Secs and then grouped up by Date and Hour. They each had their own data frames created to ensure the data was still being correctly processed.
+
+Once the data was grouped, the next step was to analyse the  With the packet length, because Facebook uses TCP segmentation offload, the packet length could be higher than the maximum of 65535 bytes we are expecting. For this analysis, the packet length column will be analysed in two different ways, one where they will be grouped by the hours
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+## *Bibliography*
+
+Darke, P. (n.d.). Reproducible data science techniques in actuarial work. Retrieved from <https://philipdarke.com/reproducible-actuarial-work/exercise1> (Last accessed 21st of January 2022)
+
+Daniela Brauckhoff, B. T. (2006). The Effect of Packet Sampling on Anomaly. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
