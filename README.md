@@ -1,39 +1,22 @@
-# CSC_8634
+Welcome to CSC_8634
 
-Welcome to ProjectTemplate!
+The aim of this investigation is to see if there is any correlation between the packets received by the Database (Cluster A data), and the time of day they were received. By realising when the peak packets are received, we are able to understand the changes in loads received hourly. This will help with ensuring the data centre can continue to sustain these loads and indicate when the data centre requires to be scaled up to accomodate for more users. 
 
-This file introduces you to ProjectTemplate, but you should eventually replace
-the contents of this file with an introduction to your project. People who
-work with your data in the future will thank you for it, including your future
-self.
+Please ensure that the project file is saved in the Documents folder in your home directory (<root>\Users\<Username>\Documents)
 
-ProjectTemplate is an R package that helps you organize your statistical
-analysis projects. Since you're reading this file, we'll assume that you've
-already called `create.project()` to set up this project and all of its
-contents.
 
-To load your new project, you'll first need to `setwd()` into the directory
-where this README file is located. Then you need to run the following two
-lines of R code:
+Navigate to the "src" folder in "CSC_8634" and run the "01-Setup-Script.R" to set up the project
+This script will automatically set up the project in RStudio if you have the project folders set up in the correct directory
 
-	library('ProjectTemplate')
-	load.project()
+As the datasets enclosed in this project are quite large, they require decompression before using. Please read the following to decompressed data:
 
-After you enter the second line of code, you'll see a series of automated
-messages as ProjectTemplate goes about doing its work. This work involves:
-* Reading in the global configuration file contained in `config`.
-* Loading any R packages you listed in the configuration file.
-* Reading in any datasets stored in `data` or `cache`.
-* Preprocessing your data using the files in the `munge` directory.
+   - Ensure bz2 files are in the data folder (the files should already be in here)
+    
+   - run the following to decompress the code (replace myfile with the dataset name)
+    
+     $ bzip2 -d "myfile".bz2   # Decompress a .tsv file
+      
 
-Once that's done, you can execute any code you'd like. For every analysis
-you create, we'd recommend putting a separate file in the `src` directory.
-If the files start with the two lines mentioned above:
+A Report pdf is saved in the "reports" folder which documents the process and analysis.
 
-	library('ProjectTemplate')
-	load.project()
 
-You'll have access to all of your data, already fully preprocessed, and
-all of the libraries you want to use.
-
-For more details about ProjectTemplate, see http://projecttemplate.net
