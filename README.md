@@ -20,3 +20,4 @@ As the datasets enclosed in this project are quite large, they require decompres
 A Report pdf is saved in the "reports" folder which documents the process and analysis.
 
 
+A Structured Abstract is also adding into the "reports" folder
