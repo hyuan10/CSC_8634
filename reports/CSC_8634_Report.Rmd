@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir= normalizePath('..'))
 ```
 
-```{r ProjectTemplate, include=FALSE}
+```{r Library Loaded, include=FALSE}
 library(ProjectTemplate)
 load.project()
 library(ggplot2)
@@ -19,7 +19,7 @@ library(scales)
 
 ## Aim and Objective
 
-The aim of this analysis is to explore and see if there is any correlation between the number of packets exchanged by the database and the when they were exchanged during the day. By reviewing when the most frequent number of packets are received by the database, we are able to understand the load on them over an average day. By doing so, it will enable the data centre to sustain the continued loads. This will also allow for engineers realise faults should any arrive due to an increased reception of packets. This will also help the engineers decide when the capacity of the data centre needs to be increased due to an increased in the average load.
+The aim of this analysis is to explore and see if there is any correlation between the number of packets exchanged by the database and the when they were exchanged during the day. By reviewing when the most frequent number of packets are received by the database, we are able to understand the load on them over an average day. By doing so, it will enable the data center to sustain the continued loads. This will also allow for engineers realise faults should any arrive due to an increased reception of packets. In addition, this will allow the engineers to decide when the capacity of the data center needs to be increased due to an increased in the average load.
 
 ## Technologies and Libraries Used
 
@@ -79,11 +79,11 @@ As part of this project, there were a number of different data sets from 3 of Fa
 * intercluster
 * interdatacenter
 
-However, as the aim and objective of this analysis is to investigate if there is any correlation between the number of packets exchanged by the database and when they are exchanged, not all of the data provided will be useful towards this analysis. Within the provided clusters, each file contained a vast number of datasets. As "packet sampling does not disturb the anomaly size when measured in volume metric" (Daniela Brauckhoff, 2006), it was decided that a small sample of the ~270 data subsets would be used. From the list, the first, last and two random subsets were chosen to be a part of this investigation. 
+However, as the aim and objective of this analysis is to investigate if there is any correlation between the number of packets exchanged by the database and when they are exchanged, not all of the data provided will be useful towards this analysis. Within the provided clusters, each file contained a vast number of datasets. As "packet sampling does not disturb the anomaly size when measured in volume metric" (Daniela Brauckhoff, 2006), it was decided that a small sample of the ~270 data subsets from Cluster A would be used. From the list, the first, last and two random subsets were chosen to be a part of this investigation. 
 
 As the datasets were large in size, they were compressed and as such, required decompression in order to be loaded onto the platform. 
 
-Upon inspection of all of the variables of the raw dataset, only the "timestamp" column and the "packet length (1)" column will be used as these were the only columns which had the required information for this particular study. The timestamp within the subset is in the Unix Epoch format, so in order to wrangle this data, it was important to convert this into a human readable format. This will also help with the plots. Once the data was transformed into a human readable format, it was found that the data was from 1st of October 2016 07:00 AM to 2nd of October 2016 07:00. This meant that, for the purpose of this investigation, the time period perfectly aligned to what was being investigated.
+Upon inspection of all of the variables of the raw dataset, only the "timestamp" column and the "packet length (1)" column will be used as these were the only columns which had the required information for this particular study. The timestamp within the subset is in the Unix Epoch format, so in order to wrangle this data, it was important to convert this into a human readable format. This will also help with the plots. Once the data was transformed into a human readable format, it was found that the data was from 1st of October 2016 07:00 AM to 2nd of October 2016 07:00 AM. This meant that, for the purpose of this investigation, the time period perfectly aligned to what was being investigated.
 
 All four subset of data were combined into one main data subset to ensure the remaining wrangling required only one set of code.  The Epoch time was converted to the human readable format of yyyy-mm-dd HH:MM and from here, got their own columns to aide in further easier data wrangling. 
 
@@ -144,12 +144,23 @@ p2
 ```
 
 
+Graph 2 shows the individual packets over time for each hour over the 24 hour period. The graph mirrors Graph 1 in terms of where the peaks are. This reinforces what is said previously that a large number of packets are being exchanged around lunch time and when people arrive home. 
 
 
+Although both of the graphs show that there is a peak around the aforementioned peak times, the data does not show this as pronounced as originally thought. Before the plots were created, the expectation was to see a plot similar to a bimodal distribution with peaks around morning and late afternoon. This was based off the assumption that most people only visit Facebook around the peak times. 
 
 
+## Summary 
 
+As the aim of this investigation was to explore the the effect of packets the packets and the time of day they were received, I believe that the plots clearly show this, however, if I were to repeat this project, I would spend more time and delve deeper into the packets themselves and investigate where they arrive from and offloaded to. Once the region of the packets have been determined, they can be separated into their own data frames and evaluated further. By doing so, it will allow for more accurate plotting of the packets over time graphs as it would allow the packets from each region to be plot on it's own graph and therefore show a more evident peak in the increase in activity without more active regions communicating with the data center.
 
+An initial issue I can foresee with this method of analysis is the legal requirements to keep the IP address anonymous, this issue was raised in "The Effect of Packet Sampling on Anomaly" paper which stated that due to those restrictions, it would "make it difficult to collect such detailed packet-level data" (Daniela Brauckhoff, 2006). 
+
+Another foreseeable hurdle with further evaluation of the packets would be the decryption of the anonymous IP addresses and sorting by region (if hypothetically the legal requirement of data protection was not in place). It might be difficult to decrypt different versions of IP between the different protocol numbers.
+
+This project has taught me a lot regarding time formatting and time series data. I found that without outside help, the Unix Epoch format for time was not easy to understand and not as intuitive as many other standard time formats, however, since having hands on experience with the format, I can understand and appreciate why the particular format is used as timestamps.
+
+To conclude, I believe that the results of the plot demonstrate the increase and decrease in traffic to the Facebook Altoona Data Center across over the course of a day which will allow for the engineers to realise any faults or unusual traffic. However, I would like to have delved deeper into the originating region of the packets and plot a graph similar to the ones produces in this investigation with the addition of global region.
 
 
 
