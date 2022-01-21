@@ -13,6 +13,8 @@ knitr::opts_knit$set(root.dir= normalizePath('..'))
 ```{r ProjectTemplate, include=FALSE}
 library(ProjectTemplate)
 load.project()
+library(ggplot2)
+library(scales)
 ```
 
 ## Aim and Objective
@@ -85,17 +87,61 @@ Upon inspection of all of the variables of the raw dataset, only the "timestamp"
 
 All four subset of data were combined into one main data subset to ensure the remaining wrangling required only one set of code.  The Epoch time was converted to the human readable format of yyyy-mm-dd HH:MM and from here, got their own columns to aide in further easier data wrangling. 
 
-Since the data only spanned across two days, the data was filtered to for the 1st and 2nd to have their own sets (in retrospect, this was not required as the remaining data wrangling did not require the dates to be separate). Each filtered dataset was then sorted by Hour, Mins and Secs and then grouped up by Date and Hour. They each had their own data frames created to ensure the data was still being correctly processed.
+Since the data only spanned across two days, the data was filtered to for the 1st and 2nd to have their own sets (in retrospect, this was not required as the remaining data wrangling did not require the dates to be separate). Each filtered dataset was then sorted by Hour, Mins and Secs and then grouped up by Date and Hour. They each had their own data frames created to ensure the data was still being correctly processed. 
 
-Once the data was grouped, the next step was to analyse the  With the packet length, because Facebook uses TCP segmentation offload, the packet length could be higher than the maximum of 65535 bytes we are expecting. For this analysis, the packet length column will be analysed in two different ways, one where they will be grouped by the hours
+Once the data was grouped, the next step was to wrangle the packet length column. With the packet length, because Facebook uses TCP segmentation offload, the packet length could be longer than the maximum of 65535 bytes. For this analysis, the packet length column will be analysed in two different ways. One method in which the packet lengths will be analysed will be by summing the total length for each hour and plotting the total length on a graph against the time. Although the sum of the packet length will have an arbitrary meaning, it has an intrinsic value of displaying showing the size of the packets over the time period. Another method in which the packet length will be analysed is by counting the individual packets over each hour. This method will show how busy each hour of the day is and highlight when the peak times which the most packets are received and offloaded. Should there be a spike or dip in the daily average of packets, engineers will be able to use this data and analyse and determine the cause.
+
+As such, two data frames were created from the originally loaded data. The first data frame contains the Date Time grouped by the Hour and the packet length summed, whereas in the second data frame, the individual packet lengths is counted.
+
+## Analysis and Results
+
+With the objective of this analysis being to investigate the correlation of the exchange of packets by the database, the sum packet length and count of packets lengths were plotted against each hour to show the increased and decrease of traffic load throughout the day. This will allow for a visual representation of how many packets are received and offloaded during peak and off-peak times.
+
+```{r, Sum of Packet Length Over Time, echo=FALSE}
+
+
+p1 <- ggplot(data=df.gb.database, aes(x=Time, y=Sum.Packets)) +
+  ggtitle("Sum of Packet Length Over Time")+
+  labs(x="Time", y= "Sum of Packet Lenth",caption="Graph 1")+
+  geom_bar(stat="identity", fill="#08588D")+
+  scale_x_datetime(labels = date_format("%H:%M", tz="GMT"))+
+  scale_y_continuous(labels = comma)+
+  theme_bw()
+p1
+
+```
+
+
+From the above plot, the data suggests that the Altoona Data Center received the largest packets from approximately 11:00 until 13:00 and then once again from approximately 16:00 until 17:00 with the exception of 09:00 and 19:00 having abnormally high peaks. With the overall mean of the sum packet lengths across the day to be ~143,000, the average over the peak times are as follows:
+
+\begin{center}
+Table 1: Average Packet Length at Peak times
+\end{center}
+
+| Peak Times | Sum Packet Length (Nearest 1000) |
+|------|------------------|
+|11-13 | 173,000           |
+|16-17 | 180,000           |
+
+
+The peak times from the table above shows that from 11:00-13:00, the sum packet length was approximately 19% higher and from 16:00-17:00 the total was approximately 23% higher. The results would suggest that most of the traffic was generated around lunchtime and also when people left work/school. 
+
+As mentioned, there are two peaks which appear within this data, once at 09:00 and once at 19:00. This makes sense as the morning peak suggest that much of the traffic is being generated when most people just starting their work and also when they arrive home. 
 
 
 
+```{r, Count of Packet Length Over Time, echo=FALSE}
 
+p2 <- ggplot(data=df.cb.database, aes(x=CombinedDateHour, y=Individual_Packets)) +
+  ggtitle("Individual Packets Exchanged Over Time")+
+  labs(x="Time", y= "Individual Packets",caption="Graph 2")+
+  geom_bar(stat="identity", fill="#08588D")+
+  scale_x_datetime(labels = date_format("%H:%M", tz="GMT"))+
+  scale_y_continuous(labels = comma)+
+  theme_bw()
+p2
 
-
-
-
+```
 
 
 
