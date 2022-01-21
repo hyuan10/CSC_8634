@@ -13,6 +13,7 @@ p1 <- ggplot(data=df.gb.database, aes(x=Time, y=Sum.Packets)) +
   theme_bw()
 p1
 
+ggsave("~/Documents/CSC_8634/graphs/p1.png", p1)
 
 p2 <- ggplot(data=df.cb.database, aes(x=CombinedDateHour, y=Individual_Packets)) +
   ggtitle("Individual Packets Exchanged Over Time")+
@@ -22,3 +23,5 @@ p2 <- ggplot(data=df.cb.database, aes(x=CombinedDateHour, y=Individual_Packets))
   scale_y_continuous(labels = comma)+
   theme_bw()
 p2
+
+ggsave("~/Documents/CSC_8634/graphs/p2.png", p2)
